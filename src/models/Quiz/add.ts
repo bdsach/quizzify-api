@@ -1,11 +1,11 @@
 import { turso } from "@lib/turso";
 import { ulid } from "ulidx";
 
-async function addQuiz(text: string) {
+async function addQuiz(text: string, slug: string) {
     try {
       const rs = await turso.execute({
-        sql: "INSERT INTO quiz (id, text) values (?, ?)",
-        args: [ulid(), text],
+        sql: "INSERT INTO quiz (id, text, slug) values (?, ?, ?)",
+        args: [ulid(), text, slug],
       });
       return {
         status: "ok",

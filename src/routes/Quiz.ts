@@ -14,22 +14,22 @@ quizRoute
     "/quiz",
     async ({ body, set }) => {
       try {
-        const title = body.title;
-        const add = await addQuiz(title);
+        const response = await addQuiz(body.text, body.slug);
 
-        if (add?.status === "ok") {
+        if (response?.status === "ok") {
           set.status = HTTPStatus.CREATED
-          return add
+          return response
         }
 
-        return body;
+        return response
       } catch (error) {
         console.log(error);
       }
     },
     {
       body: t.Object({
-        title: t.String(),
+        text: t.String(),
+        slug : t.String(),
       }),
     }
   )
