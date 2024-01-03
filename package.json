@@ -1,0 +1,20 @@
+{
+  "name": "hello-elysia",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@elysiajs/cookie": "^0.8.0",
+    "@elysiajs/jwt": "^0.8.0",
+    "@grotto/logysia": "^0.1.1",
+    "@libsql/client": "^0.4.0-pre.5",
+    "elysia": "latest",
+    "ulidx": "^2.2.1"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}
