@@ -5,7 +5,7 @@ export const groupedQuiz = (flatResults) => {
     if (!nestedData[row.quiz_id]) {
       nestedData[row.quiz_id] = {
         id: row.quiz_id,
-        title: row.quiz_title,
+        text: row.quiz_text,
         description: row.quiz_description,
         questions: [],
       };
