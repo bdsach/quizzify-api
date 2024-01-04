@@ -1,7 +1,7 @@
 import { turso } from "@lib/turso";
 
 // @ts-ignore
-import { groupedQuiz } from "../../helpers/groupedQuiz";
+import { groupedQuestion } from "../../helpers/groupedQuestion";
 
 async function quizById(id: string) {
   try {
@@ -23,7 +23,7 @@ async function quizById(id: string) {
                 `,
       args: [id],
     });
-    const result = groupedQuiz(rs.rows);
+    const result = groupedQuestion(rs.rows);
 
     return {
       status: "ok",
