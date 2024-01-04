@@ -14,12 +14,13 @@ async function quizById(id: string) {
                 question.text AS question_text,
                 answer.id AS option_id,
                 answer.text AS option_text,
+                answer.option AS option_char,
                 answer.is_correct
             FROM quiz
                 LEFT JOIN question ON question.quiz_id = quiz.id
                 LEFT JOIN answer ON answer.question_id = question.id
                 WHERE quiz.id = ?
-                ORDER BY quiz.id, question.id, answer.id;
+                ORDER BY quiz.id, question.id, answer.option;
                 `,
       args: [id],
     });
@@ -28,6 +29,7 @@ async function quizById(id: string) {
     return {
       status: "ok",
       data: result,
+      // data: rs.rows,
     };
   } catch (error) {
     console.log(error);

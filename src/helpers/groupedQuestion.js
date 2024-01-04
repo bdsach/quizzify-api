@@ -20,6 +20,7 @@ export const groupedQuestion = (flatResults) => {
     const currentOption = {
       id: row.option_id,
       text: row.option_text,
+      option: row.option_char,
       is_correct: row.is_correct,
     };
 
