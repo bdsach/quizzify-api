@@ -1,7 +1,12 @@
 import { Elysia, t } from "elysia";
-import { allQuiz, addQuiz, deleteQuiz, allCategories } from "@models/Quiz";
+import {
+  allQuiz,
+  quizById,
+  addQuiz,
+  deleteQuiz,
+  allCategories,
+} from "@models/Quiz";
 import { HTTPStatus } from "../types/HTTPStatus";
-
 
 const quizRoute = new Elysia();
 
@@ -10,6 +15,20 @@ quizRoute
     const quizData = await allQuiz();
     return quizData;
   })
+  .get(
+    "quiz/:id",
+    async ({ params }) => {
+      const id = params.id;
+      const quizData = await quizById(id);
+      return quizData;
+    },
+    {
+      params: t.Object({
+        id: t.String(),
+      }),
+    }
+  )
+
   .get("/quiz/categories", async () => {
     const quizData = await allCategories();
     return quizData;
@@ -21,11 +40,11 @@ quizRoute
         const response = await addQuiz(body.text, body.slug);
 
         if (response?.status === "ok") {
-          set.status = HTTPStatus.CREATED
-          return response
+          set.status = HTTPStatus.CREATED;
+          return response;
         }
 
-        return response
+        return response;
       } catch (error) {
         console.log(error);
       }
@@ -33,7 +52,7 @@ quizRoute
     {
       body: t.Object({
         text: t.String(),
-        slug : t.String(),
+        slug: t.String(),
       }),
     }
   )
@@ -43,7 +62,7 @@ quizRoute
       const id = params.id;
       const deleteData = await deleteQuiz(id);
       if (deleteData?.status === "ok") {
-        set.status = HTTPStatus.OK
+        set.status = HTTPStatus.OK;
         return {
           message: "Quiz deleted",
         };
@@ -51,6 +70,6 @@ quizRoute
     } catch (error) {
       console.log(error);
     }
-  })
+  });
 
 export default quizRoute;

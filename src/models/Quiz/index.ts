@@ -1,6 +1,7 @@
 import { allQuiz } from "./all";
+import { quizById } from "./id";
 import { addQuiz } from "./add";
 import { deleteQuiz } from "./delete";
-import {allCategories} from "./categories";
+import { allCategories } from "./categories";
 
-export { allQuiz, addQuiz, deleteQuiz, allCategories };
+export { allQuiz,quizById, addQuiz, deleteQuiz, allCategories };
