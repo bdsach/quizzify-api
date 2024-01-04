@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS quiz (
     id TEXT,
     text TEXT,
     slug TEXT,
+    icon TEXT,
     PRIMARY KEY(id)
 );
 
