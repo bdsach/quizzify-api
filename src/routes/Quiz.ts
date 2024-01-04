@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { allQuiz, addQuiz, deleteQuiz } from "@models/Quiz";
+import { allQuiz, addQuiz, deleteQuiz, allCategories } from "@models/Quiz";
 import { HTTPStatus } from "../types/HTTPStatus";
 
 
@@ -8,6 +8,10 @@ const quizRoute = new Elysia();
 quizRoute
   .get("/quiz", async () => {
     const quizData = await allQuiz();
+    return quizData;
+  })
+  .get("/quiz/categories", async () => {
+    const quizData = await allCategories();
     return quizData;
   })
   .post(
