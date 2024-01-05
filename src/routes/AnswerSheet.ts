@@ -11,7 +11,7 @@ answerSheetRoute.post(
       const response = await add(
         body.question_id,
         body.answer_id,
-        body.user_id
+        Number(body.user_id)
       );
 
       if (response?.status === "error") {
@@ -30,7 +30,7 @@ answerSheetRoute.post(
     body: t.Object({
       question_id: t.String(),
       answer_id: t.String(),
-      user_id: t.Number(),
+      user_id: t.String(),
     }),
   }
 );
