@@ -29,8 +29,8 @@ async function add(questionId: string, answerId: string, userId: number) {
 
     // if check already submitted
     const findAnswerSheet = await turso.execute({
-      sql: `SELECT id FROM answer_sheet WHERE question_id = ? AND answer_id = ? AND user_id = ?;`,
-      args: [questionId, answerId, userId],
+      sql: `SELECT id FROM answer_sheet WHERE question_id = ? AND user_id = ?;`,
+      args: [questionId, userId],
     })
 
     if (findAnswerSheet.rows.length > 0) {
