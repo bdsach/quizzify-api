@@ -6,7 +6,7 @@ CREATE TABLE "users" (
     "id" INTEGER,
     "first_name" TEXT,
     "last_name" TEXT,
-    "email" TEXT UNIQUE,
-    "password" TEXT,
+    "email" TEXT NOT NULL UNIQUE,
+    "password" TEXT NOT NULL,
     PRIMARY KEY("id" AUTOINCREMENT)
 );
