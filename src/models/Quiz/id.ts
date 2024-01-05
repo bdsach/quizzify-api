@@ -24,6 +24,14 @@ async function quizById(id: string) {
                 `,
       args: [id],
     });
+
+    if (rs.rows[0].question_id === null) {
+      return {
+        status: "ok",
+        data: [],
+      };
+    }
+
     const result = groupedQuestion(rs.rows);
 
     return {
