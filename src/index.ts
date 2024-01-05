@@ -4,6 +4,7 @@ import userRoute from "@routes/User";
 import quizRoute from "@routes/Quiz";
 import questionRoute from "@routes/Question";
 import answerRoute from "@routes/Answer";
+import answerSheetRoute from "@routes/AnswerSheet"
 
 const app = new Elysia();
 app
@@ -12,6 +13,7 @@ app
   .use(quizRoute)
   .use(questionRoute)
   .use(answerRoute)
+  .use(answerSheetRoute)
   .get("/test", () => {
     return {
       message: "Hello",
