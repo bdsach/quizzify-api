@@ -1,4 +1,6 @@
 import { Elysia, t } from "elysia";
+import { cookie } from "@elysiajs/cookie";
+import { jwt } from "@elysiajs/jwt";
 import {
   allQuiz,
   quizById,
@@ -11,16 +13,57 @@ import { HTTPStatus } from "../types/HTTPStatus";
 const quizRoute = new Elysia();
 
 quizRoute
-  .get("/quiz", async () => {
-    const quizData = await allQuiz();
-    return quizData;
+  .use(
+    jwt({
+      name: "jwt",
+      secret: String(process.env.JWT_SECRETS),
+    })
+  )
+  .use(cookie())
+
+  /**
+   * All Quizzes
+   */
+  .get("/quiz", async ({ jwt, cookie }) => {
+    try {
+      const profile = await jwt.verify(cookie.token);
+
+      if (!profile) {
+        return {
+          status: "error",
+          message: "Unauthorized",
+        };
+      }
+
+      const quizData = await allQuiz();
+      return quizData;
+    } catch (error) {
+      console.log(error);
+    }
   })
+
+  /**
+   * Quiz by id
+   */
   .get(
     "quiz/:id",
-    async ({ params }) => {
-      const id = params.id;
-      const quizData = await quizById(id);
-      return quizData;
+    async ({ jwt, cookie, params }) => {
+      try {
+        const profile = await jwt.verify(cookie.token);
+
+        if (!profile) {
+          return {
+            status: "error",
+            message: "Unauthorized",
+          };
+        }
+
+        const id = params.id;
+        const quizData = await quizById(id);
+        return quizData;
+      } catch (error) {
+        console.log(error);
+      }
     },
     {
       params: t.Object({
@@ -29,14 +72,39 @@ quizRoute
     }
   )
 
-  .get("/quiz/categories", async () => {
-    const quizData = await allCategories();
-    return quizData;
+  /**
+   * All Quiz Categories
+   */
+  .get("/quiz/categories", async ({ jwt, cookie, params }) => {
+    try {
+      const profile = await jwt.verify(cookie.token);
+
+      if (!profile) {
+        return {
+          status: "error",
+          message: "Unauthorized",
+        };
+      }
+
+      const quizData = await allCategories();
+      return quizData;
+    } catch (error) {
+      console.log(error);
+    }
   })
   .post(
     "/quiz",
-    async ({ body, set }) => {
+    async ({ body, set, jwt, cookie }) => {
       try {
+        const profile = await jwt.verify(cookie.token);
+
+        if (!profile) {
+          return {
+            status: "error",
+            message: "Unauthorized",
+          };
+        }
+
         const response = await addQuiz(body.text, body.slug);
 
         if (response?.status === "ok") {
@@ -57,8 +125,17 @@ quizRoute
     }
   )
 
-  .delete("/quiz/:id", async ({ params, set }) => {
+  .delete("/quiz/:id", async ({ params, set, jwt, cookie }) => {
     try {
+      const profile = await jwt.verify(cookie.token);
+
+      if (!profile) {
+        return {
+          status: "error",
+          message: "Unauthorized",
+        };
+      }
+
       const id = params.id;
       const deleteData = await deleteQuiz(id);
       if (deleteData?.status === "ok") {
