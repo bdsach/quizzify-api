@@ -15,7 +15,7 @@ answerSheetRoute.post(
       );
 
       if (response?.status === "error") {
-        set.status = HTTPStatus.INTERNAL_SERVER_ERROR
+        set.status = HTTPStatus.CONFLICT
         return response
       }
 
