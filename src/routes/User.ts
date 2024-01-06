@@ -3,6 +3,7 @@ import { cookie } from "@elysiajs/cookie";
 import { jwt } from "@elysiajs/jwt";
 
 import { addUser, checkUserLogin, getUser } from "@models/User";
+import { HTTPStatus } from "src/types/HTTPStatus";
 const userRoute = new Elysia();
 
 userRoute
@@ -49,12 +50,13 @@ userRoute
    */
   .post(
     "/login",
-    async ({ jwt, cookie, setCookie, body }) => {
+    async ({ jwt, cookie, setCookie, body,set }) => {
       try {
         let userData = body;
         const response = await checkUserLogin(userData);
 
         if (!response.loggedIn) {
+          set.status = HTTPStatus.UNAUTHORIZED
           return response;
         }
 
@@ -68,12 +70,18 @@ userRoute
             maxAge: 7 * 86400,
           }
         );
-
+        set.status = HTTPStatus.OK
         return {
           message: "Login successful",
           token: cookie.token,
         };
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+        return {
+          status: "error",
+          message: error,
+        }
+      }
     },
     {
       body: t.Object({
