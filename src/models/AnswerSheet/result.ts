@@ -20,7 +20,9 @@ async function result(quizId: string, userId: number) {
     }
 
     const rs = await turso.execute({
-      sql: `SELECT SUM(is_correct) AS total_correct FROM answer_sheet
+      sql: `SELECT 
+            COUNT(answer_sheet.id) AS correct,
+            SUM(is_correct) AS total FROM answer_sheet
 
             INNER JOIN question ON question.id = answer_sheet.question_id
             INNER JOIN answer ON answer.id = answer_sheet.answer_id
