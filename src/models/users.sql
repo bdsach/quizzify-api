@@ -8,5 +8,6 @@ CREATE TABLE "users" (
     "last_name" TEXT,
     "email" TEXT NOT NULL UNIQUE,
     "password" TEXT NOT NULL,
+    "avatar" TEXT,
     PRIMARY KEY("id" AUTOINCREMENT)
 );
