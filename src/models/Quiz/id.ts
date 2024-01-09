@@ -11,6 +11,7 @@ async function quizById(id: string) {
                 quiz.id as quiz_id,
                 quiz.text AS quiz_text,
                 question.id AS question_id,
+                question.image AS question_image,
                 question.text AS question_text,
                 answer.id AS option_id,
                 answer.text AS option_text,

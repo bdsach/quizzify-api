@@ -11,6 +11,7 @@ export const groupedQuestion = (flatResults) => {
         id: row.question_id,
         quiz_id: row.quiz_id,
         quiz_text: row.quiz_text,
+        question_image: row.question_image,
         question_text: row.question_text,
         options: [],
       };

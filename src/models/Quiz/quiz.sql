@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS quiz (
 CREATE TABLE IF NOT EXISTS question (
     id TEXT PRIMARY KEY,
     text TEXT,
+    image TEXT,
     quiz_id TEXT,
     FOREIGN KEY (quiz_id) REFERENCES quiz(id)
 );
